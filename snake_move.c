@@ -113,8 +113,7 @@ int main(){
 		else{
 			printf("Hatali tus basimi,Yeni ");
 		}
-		perror("bnvnbv");
-		printf("%d test 0 : ",game);
+		printf("%d test son : ",game);
 		//oyun bitiren parantez
 	}
 	
