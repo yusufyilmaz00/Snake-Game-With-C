@@ -1,40 +1,27 @@
-// yýlan[tahta boyutu][1][1] = uzunluk,x kor., y kor
-
-// son yemeði yediðinde boyutu 1 arttýrýp ya da o halini ekrana yazdýrabilirsin.
-
-// boyut 10 olsun. son yemeði yediðinde 11 de bastýrabilirsin 10 da
-
-// yazýlarý renklendirmek için kutuphane kullanabilrisin
-
-// kuyruk büyüyecek ( büyüme bir sonraki hamlede gerçekleþecek)
-	
-// yýlan yemek yediði kareye gelince deðil, hareket edince büyümeli
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
 // rand() % 6 + 1; ( %6 bitiþ deðeri, +x = kaydýrma deðeri)[1,6]
 
 int main(){
-	// tahta boyutlarý input ( M X N )
 	int M,N,i,j,game,hamle_sayisi;
 	int yemek_sayisi,yemek_row,yemek_col;
 	int yilan_row,yilan_col,row_degis,col_degis;
 	char hareket;
 	
+	// tahta boyutlarý input ( M X N )
 	printf("Tahta boyutlarini M x N seklinde giriniz:\n");
 	scanf("%d",&M);	
 	scanf("%d",&N);
 	
 	// yemek sayýsý input :
-	printf("Yemek sayisini giriniz (Tahta boyutundan fazla olamaz!\n)");
+	printf("Yemek sayisini giriniz(Tahta boyutundan fazla olamaz!)\n");
 	scanf("%d",&yemek_sayisi);
 	
 	// tahtaya sýðan yemek sayýsý kontrol edilmeli, gerekirse tekrar alýnmalý
 	while(yemek_sayisi >= (M*N) ){
 		printf("Daha kucuk bir sayi giriniz !!\n");
-		scanf("%d",&yemek_sayisi);
+		scanf("%d\n",&yemek_sayisi);
 	}
 	
 	// oyun tahtasý oluþtur
@@ -45,7 +32,6 @@ int main(){
 			tablo[i][j]='_';
 		}
 	}
-	
 	// olasý bir hata:
 			// içinde zaten 0 olan bir hücreye 0 tekrar 0 koyup daha az meyve yerleþtirebilir, diklkat et. if ile içini kontrol ettir.
 	// yemek pozisyonu
@@ -74,7 +60,7 @@ int main(){
 		
 		if(tablo[yilan_row][yilan_col] =='_' ){
 			tablo[yilan_row][yilan_col]='1';	
-			yilan[max_boyut-1][0] = max_boyut;
+			yilan[max_boyut-1][0] = max_boyut+64;
 			yilan[max_boyut-1][1] = yilan_row;
 			yilan[max_boyut-1][2] = yilan_col;
 			j -= 1;
@@ -84,7 +70,7 @@ int main(){
 	game = 1;
 	hamle_sayisi=0;
 	while(game == 1 && yemek_sayisi>0){
-		
+
 		//güncel tabloyu bastýr
 		for(i=0;i<M;i++){
 			for(j=0;j<N;j++){
@@ -104,43 +90,49 @@ int main(){
 			if(hareket=='u'){
 				row_degis = -1;	
 				col_degis = 0;
-				hamle_sayisi +=1;
 			}
 			else if(hareket=='d'){
 				row_degis = 1;
 				col_degis = 0;
-				hamle_sayisi +=1;
 			}
 			else if(hareket=='l'){
 				row_degis = 0;
 				col_degis = -1;
-				hamle_sayisi +=1;
 			}
 			else if(hareket=='r'){
 				row_degis = 0;
 				col_degis = 1;
-				hamle_sayisi +=1;
 			}
+			hamle_sayisi +=1;
 			
-			// yilan koordinatlarý güncelle
-			for(i=0;i<max_boyut;i++){
-				yilan[i][1] += row_degis;
-				yilan[i][2] += col_degis;
-			}
+			// yýlanýn kafasýnýn yeni koordinatlarý
+			yilan_row = yilan[0][1] + row_degis;
+			yilan_col = yilan[0][2] + col_degis;
 			
-			// yýlanýn kafasýnýn koordinatlarý
-			yilan_row = yilan[0][1];
-			yilan_col = yilan[0][2];
-			// Yýlanýn meyve yedi mi ?
-			if(tablo[yilan_row][yilan_col]== '0'){
-				yemek_sayisi -= 1;
-			}
 			// Yýlanýn kafasý duvara çarptý mý ??
 			if(yilan_row<0 || yilan_row>=M || yilan_col<0 || yilan_col >=N){
 				game = 0;
 				printf("Kaybettiniz....\n\n");
 				printf("Toplam Hamle:%d\nYilan Buyuklugu:%d\nKalan Yemek Sayisi:%d\n",hamle_sayisi,max_boyut,yemek_sayisi);
 			}
+			// Yýlanýn meyve yedi mi ?
+			if(tablo[yilan_row][yilan_col]== '0'){
+				yemek_sayisi -= 1;
+				max_boyut +=1; 
+				// kuyruk ekleyelim
+				yilan[max_boyut-1][0]= max_boyut+64;
+				yilan[max_boyut-1][1]= 0; // herhangi bir sayý yazabilirim. 
+				yilan[max_boyut-1][2]= 0; // çünkü zaten bir sonraki adýmda bu koordinatlar deðiþecek
+			}
+			
+			// yilan kuyruk koordinatlarý güncelle ( kaydýrarak)
+			for(i=max_boyut-1;i>0;i--){  // sondan baþa git, soldaki kordinatý saðdakine aktar
+ 				yilan[i][1] = yilan[i-1][1];
+				yilan[i][2] = yilan[i-1][2];
+			}
+			// kafa koordinatlarý güncelle
+			yilan[0][1] += row_degis;
+			yilan[0][2] += col_degis;
 			
 			// haritayý sýfýrlar --meyveler hariç
 			for(i=0;i<M;i++){
@@ -154,11 +146,9 @@ int main(){
 			// yeni koordinatlarý gir
 			int kuyruk_no;
 			for(i=0;i<max_boyut;i++){
-				kuyruk_no = yilan[i][0];
-				
 				yilan_row = yilan[i][1];
 				yilan_col = yilan[i][2];
-				tablo[yilan_row][yilan_col] = kuyruk_no ;
+				tablo[yilan_row][yilan_col] = yilan[i][0];
 			}
 		//if bitiyor	
 		}
@@ -167,7 +157,7 @@ int main(){
 		}
 	}
 	if(yemek_sayisi==0){
-		printf("\nTebriklerr !\n\nTum meyveleri yediniz\n\nYaptiginiz toplam hamle sayisi:%d",hamle_sayisi);
+		printf("\nTebriklerr !\n\nTum meyveleri yediniz\n\nYaptiginiz toplam hamle sayisi:%d\nMax Yilan Boyutu:%d",hamle_sayisi,max_boyut);
 	}
 	return 0;
 }                   
