@@ -8,9 +8,6 @@
 
 // kendin fonk. yaz
 
-
-
-
 // kuyruk büyüyecek ( büyüme bir sonraki hamlede gerçekleþecek)
 
 // oyun tamamlanýnca kaç hamlede tüm meyveleri yedi, yazdýr
@@ -44,10 +41,8 @@ int main(){
 	
 	// tahtaya sýðan yemek sayýsý kontrol edilmeli, gerekirse tekrar alýnmalý
 	while(yemek_sayisi >= (M*N) ){
-		if(yemek_sayisi >= (M*N)){
 		printf("Daha kucuk bir sayi giriniz !!\n");
 		scanf("%d",&yemek_sayisi);
-		}
 	}
 	
 	// oyun tahtasý oluþtur
@@ -93,45 +88,43 @@ int main(){
 			j -= 1;
 		}
 	}
-	
-	// tabloyu bastýralým
-	for(i=0;i<M;i++){
-		for(j=0;j<N;j++){
-			printf("%c ",tablo[i][j]);
-		}
-		printf("\n");
-	}
 
 	game = 1;
 	hamle_sayisi=0;
-	while(game == 1){
-		//process
+	while(game == 1 && yemek_sayisi>0){
+		
+		//güncel tabloyu bastýr
+		for(i=0;i<M;i++){
+			for(j=0;j<N;j++){
+				printf("%c ",tablo[i][j]);
+			}
+			printf("\n");
+		}
+		printf("------------\nToplam Hamle Sayisi: %d\n------------\n",hamle_sayisi);
+		
+		//process	
 		printf("Hareket yonunu gir: ");
 		scanf("%s",&hareket);
 		printf("------------\n");
-		
+
 		// yönler U,D,L,R
 		if(hareket=='u' || hareket=='d' || hareket=='l' || hareket=='r'){
 			if(hareket=='u'){
-				//printf("up\n");
 				row_degis = -1;	
 				col_degis = 0;
 				hamle_sayisi +=1;
 			}
 			else if(hareket=='d'){
-				//printf("down\n");
 				row_degis = 1;
 				col_degis = 0;
 				hamle_sayisi +=1;
 			}
 			else if(hareket=='l'){
-				//printf("left\n");
 				row_degis = 0;
 				col_degis = -1;
 				hamle_sayisi +=1;
 			}
 			else if(hareket=='r'){
-				//printf("right\n");
 				row_degis = 0;
 				col_degis = 1;
 				hamle_sayisi +=1;
@@ -149,7 +142,8 @@ int main(){
 
 			if(yilan_row<0 || yilan_row>=M || yilan_col<0 || yilan_col >=N){
 				game = 0;
-				printf("Kaybettiniz....\n");
+				printf("Kaybettiniz....\n\n");
+				printf("Toplam Hamle:%d\nYilan Buyuklugu:%d\nKalan Yemek Sayisi:%d\n",hamle_sayisi,max_boyut,yemek_sayisi);
 			}
 			
 			// haritayý sýfýrlar --meyveler hariç
@@ -161,7 +155,6 @@ int main(){
  				}
 			}
 
-
 			// yeni koordinatlarý gir
 			int kuyruk_no;
 			for(i=0;i<max_boyut;i++){
@@ -171,24 +164,11 @@ int main(){
 				yilan_col = yilan[i][2];
 				tablo[yilan_row][yilan_col] = kuyruk_no ;
 			}
-			
-			//yeni tabloyu bastýr
-			for(i=0;i<M;i++){
-				for(j=0;j<N;j++){
-					printf("%c ",tablo[i][j]);
-				}
-				printf("\n");
-			}
-			printf("------------\nToplam Hamle Sayisi: %d\n------------\n",hamle_sayisi);
 		//if bitiyor	
 		}
 		else{
 			printf("Hatali tus basimi,Yeni ");
 		}
 	}
-	
-	
 	return 0;
-	
 }                   
-
