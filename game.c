@@ -6,15 +6,7 @@
 
 // yazýlarý renklendirmek için kutuphane kullanabilrisin
 
-// kendin fonk. yaz
-
 // kuyruk büyüyecek ( büyüme bir sonraki hamlede gerçekleþecek)
-
-// oyun tamamlanýnca kaç hamlede tüm meyveleri yedi, yazdýr
-
-// duvara çarpýnca oyun sonlanmalý , kaybettiniz mesajý:
-	
-	// hamle sayýsý, yýlan büyüklüðü ve geriye kalan yemek sayýsý yazdýr.
 	
 // yýlan yemek yediði kareye gelince deðil, hareket edince büyümeli
 
@@ -69,7 +61,7 @@ int main(){
 	}
 	
 	// yýlan koordinatlarý
-	int yilan[M*N][3];
+	int yilan[yemek_sayisi+1][3];
 	int max_boyut;
 	max_boyut=1;
 	
@@ -104,7 +96,7 @@ int main(){
 		
 		//process	
 		printf("Hareket yonunu gir: ");
-		scanf("%s",&hareket);
+		scanf(" %c",&hareket);    // ("%s",&hareket) ----->  (" %c",&hareket) yapýlarak bug çözüldü
 		printf("------------\n");
 
 		// yönler U,D,L,R
@@ -136,10 +128,14 @@ int main(){
 				yilan[i][2] += col_degis;
 			}
 			
-			// Yýlanýn kafasý duvara çarptý mý ??
+			// yýlanýn kafasýnýn koordinatlarý
 			yilan_row = yilan[0][1];
 			yilan_col = yilan[0][2];
-
+			// Yýlanýn meyve yedi mi ?
+			if(tablo[yilan_row][yilan_col]== '0'){
+				yemek_sayisi -= 1;
+			}
+			// Yýlanýn kafasý duvara çarptý mý ??
 			if(yilan_row<0 || yilan_row>=M || yilan_col<0 || yilan_col >=N){
 				game = 0;
 				printf("Kaybettiniz....\n\n");
@@ -169,6 +165,9 @@ int main(){
 		else{
 			printf("Hatali tus basimi,Yeni ");
 		}
+	}
+	if(yemek_sayisi==0){
+		printf("\nTebriklerr !\n\nTum meyveleri yediniz\n\nYaptiginiz toplam hamle sayisi:%d",hamle_sayisi);
 	}
 	return 0;
 }                   
