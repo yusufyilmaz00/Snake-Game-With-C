@@ -9,19 +9,9 @@
 // kendin fonk. yaz
 
 
-// yýlan (1-n) , yemekler 0, diðerleri boþluk
+
 
 // kuyruk büyüyecek ( büyüme bir sonraki hamlede gerçekleþecek)
-
-
-
-
-	
-
-	
-// her adýmda tahta güncellenmeli ve hamle sayýsý gösterilmeli ( + puan da olabilir)
-
-// yönler U,D,L,R
 
 // oyun tamamlanýnca kaç hamlede tüm meyveleri yedi, yazdýr
 
@@ -118,28 +108,30 @@ int main(){
 		//process
 		printf("Hareket yonunu gir: ");
 		scanf("%s",&hareket);
+		printf("------------\n");
 		
+		// yönler U,D,L,R
 		if(hareket=='u' || hareket=='d' || hareket=='l' || hareket=='r'){
 			if(hareket=='u'){
-				printf("up\n");
+				//printf("up\n");
 				row_degis = -1;	
 				col_degis = 0;
 				hamle_sayisi +=1;
 			}
 			else if(hareket=='d'){
-				printf("down\n");
+				//printf("down\n");
 				row_degis = 1;
 				col_degis = 0;
 				hamle_sayisi +=1;
 			}
 			else if(hareket=='l'){
-				printf("left\n");
+				//printf("left\n");
 				row_degis = 0;
 				col_degis = -1;
 				hamle_sayisi +=1;
 			}
 			else if(hareket=='r'){
-				printf("right\n");
+				//printf("right\n");
 				row_degis = 0;
 				col_degis = 1;
 				hamle_sayisi +=1;
@@ -150,6 +142,16 @@ int main(){
 				yilan[i][1] += row_degis;
 				yilan[i][2] += col_degis;
 			}
+			
+			// Yýlanýn kafasý duvara çarptý mý ??
+			yilan_row = yilan[0][1];
+			yilan_col = yilan[0][2];
+
+			if(yilan_row<0 || yilan_row>=M || yilan_col<0 || yilan_col >=N){
+				game = 0;
+				printf("Kaybettiniz....\n");
+			}
+			
 			// haritayý sýfýrlar --meyveler hariç
 			for(i=0;i<M;i++){
 				for(j=0;j<N;j++){
@@ -159,12 +161,9 @@ int main(){
  				}
 			}
 
-			//for(i=0;i<max_boyut;i++){
-			//	printf("kuyruk:%d, row:%d, col:%d\n",yilan[i][0],yilan[i][1],yilan[i][2]);
-			//}
+
 			// yeni koordinatlarý gir
 			int kuyruk_no;
-			// 48: '0' 57: '9'
 			for(i=0;i<max_boyut;i++){
 				kuyruk_no = yilan[i][0];
 				
