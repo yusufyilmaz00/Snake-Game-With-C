@@ -33,12 +33,15 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 // rand() % 6 + 1; ( %6 bitiþ deðeri, +x = kaydýrma deðeri)[1,6]
 
 int main(){
 	// tahta boyutlarý input ( M X N )
-	int M,N,yemek_sayisi,yemek_x,yemek_y,i,j,yilan_x,yilan_y,game;
+	int M,N,i,j,game;
+	int yemek_sayisi,yemek_x,yemek_y;
+	int yilan_x,yilan_y;
 	char hareket;
 	
 	printf("Tahta boyutlarini M x N seklinde giriniz:\n");
@@ -80,6 +83,7 @@ int main(){
 		}
 	}
 	// yýlan baþlangýç pozisyonu
+	srand(time(NULL));
 	j=1;
 	while(j != 0){
 		yilan_x= rand() % M;
@@ -106,8 +110,18 @@ int main(){
 		scanf("%s",&hareket);
 		
 		if(hareket=='u' || hareket=='d' || hareket=='l' || hareket=='r'){
-			//oyun devam
-			printf("correct\n");
+			if(hareket=='u'){
+				printf("up\n");
+			}
+			else if(hareket=='d'){
+				printf("down\n");
+			}
+			else if(hareket=='l'){
+				printf("left\n");
+			}
+			else if(hareket=='r'){
+				printf("right\n");
+			}
 		}
 		else{
 			printf("Hatali tus basimi,Yeni ");
