@@ -25,11 +25,11 @@ int main(){
 	}
 	
 	// oyun tahtasý oluþtur
-	char tablo[M][N];
+	int tablo[M][N];
 	
 	for(i=0;i<M;i++){
 		for(j=0;j<N;j++){
-			tablo[i][j]='_';
+			tablo[i][j]=-1;
 		}
 	}
 	// olasý bir hata:
@@ -40,8 +40,8 @@ int main(){
 		yemek_row= rand() % M;
 		yemek_col= rand() % N;
 		
-		if(tablo[yemek_row][yemek_col] =='_'){
-			tablo[yemek_row][yemek_col]='0';	
+		if(tablo[yemek_row][yemek_col] ==-1){
+			tablo[yemek_row][yemek_col]=0;	
 			i -= 1;
 		}
 	}
@@ -58,9 +58,9 @@ int main(){
 		yilan_row= rand() % M;
 		yilan_col= rand() % N;
 		
-		if(tablo[yilan_row][yilan_col] =='_' ){
-			tablo[yilan_row][yilan_col]='1';	
-			yilan[max_boyut-1][0] = max_boyut+64;
+		if(tablo[yilan_row][yilan_col] == -1 ){
+			tablo[yilan_row][yilan_col]=1;	
+			yilan[max_boyut-1][0] = max_boyut;
 			yilan[max_boyut-1][1] = yilan_row;
 			yilan[max_boyut-1][2] = yilan_col;
 			j -= 1;
@@ -74,7 +74,15 @@ int main(){
 		//güncel tabloyu bastýr
 		for(i=0;i<M;i++){
 			for(j=0;j<N;j++){
-				printf("%c ",tablo[i][j]);
+				if(tablo[i][j] == -1){
+					printf("  |");
+				}
+				else if(tablo[i][j] <=9 ){
+					printf("%d |",tablo[i][j]);
+				}
+				else if(tablo[i][j] >9 ){
+					printf("%d|",tablo[i][j]);	
+				}
 			}
 			printf("\n");
 		}
@@ -116,11 +124,11 @@ int main(){
 				printf("Toplam Hamle:%d\nYilan Buyuklugu:%d\nKalan Yemek Sayisi:%d\n",hamle_sayisi,max_boyut,yemek_sayisi);
 			}
 			// Yýlanýn meyve yedi mi ?
-			if(tablo[yilan_row][yilan_col]== '0'){
+			if(tablo[yilan_row][yilan_col]== 0){
 				yemek_sayisi -= 1;
 				max_boyut +=1; 
 				// kuyruk ekleyelim
-				yilan[max_boyut-1][0]= max_boyut+64;
+				yilan[max_boyut-1][0]= max_boyut;
 				yilan[max_boyut-1][1]= 0; // herhangi bir sayý yazabilirim. 
 				yilan[max_boyut-1][2]= 0; // çünkü zaten bir sonraki adýmda bu koordinatlar deðiþecek
 			}
@@ -137,14 +145,13 @@ int main(){
 			// haritayý sýfýrlar --meyveler hariç
 			for(i=0;i<M;i++){
 				for(j=0;j<N;j++){
-					if( tablo[i][j] !='0' ){
-						tablo[i][j] = '_';
+					if( tablo[i][j] != 0 ){
+						tablo[i][j] = -1;
 					}
  				}
 			}
 
 			// yeni koordinatlarý gir
-			int kuyruk_no;
 			for(i=0;i<max_boyut;i++){
 				yilan_row = yilan[i][1];
 				yilan_col = yilan[i][2];
