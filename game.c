@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 int main(){
-	int M,N,i,j,game,hamle_sayisi;
+	int M,N,i,j,game,hamle_sayisi,is_eat;
 	int yemek_sayisi,yemek_row,yemek_col;
 	int yilan_row,yilan_col,row_degis,col_degis;
 	char hareket;
@@ -121,14 +121,11 @@ int main(){
 				printf("Kaybettiniz....\n\n");
 				printf("Toplam Hamle:%d\nYilan Buyuklugu:%d\nKalan Yemek Sayisi:%d\n",hamle_sayisi,max_boyut,yemek_sayisi);
 			}
+			
+			is_eat=0;
 			// Yýlanýn meyve yedi mi ?
 			if(tablo[yilan_row][yilan_col]== 0){
-				yemek_sayisi -= 1;
-				max_boyut +=1; 
-				// kuyruk ekleyelim
-				yilan[max_boyut-1][0]= max_boyut;
-				yilan[max_boyut-1][1]= 0; // herhangi bir sayý yazabilirim. 
-				yilan[max_boyut-1][2]= 0; // çünkü zaten bir sonraki adýmda bu koordinatlar deðiþecek
+				is_eat=1;
 			}
 			
 			// yilan kuyruk koordinatlarý güncelle ( kaydýrarak)
@@ -154,6 +151,15 @@ int main(){
 				yilan_row = yilan[i][1];
 				yilan_col = yilan[i][2];
 				tablo[yilan_row][yilan_col] = yilan[i][0];
+			}
+			// yemek sayýsý azaltma ve kuyruk
+			if(is_eat==1){
+				yemek_sayisi -= 1;
+				max_boyut +=1; 
+				// kuyruk ekleyelim
+				yilan[max_boyut-1][0]= max_boyut;
+				yilan[max_boyut-1][1]= 0; // herhangi bir sayý yazabilirim. 
+				yilan[max_boyut-1][2]= 0; // çünkü zaten koordinatlar güncellenirken olmasý gerek koordinatý alacak
 			}
 		//if bitiyor	
 		}
