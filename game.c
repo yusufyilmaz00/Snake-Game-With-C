@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-// rand() % 6 + 1; ( %6 bitiþ deðeri, +x = kaydýrma deðeri)[1,6]
-
 int main(){
 	int M,N,i,j,game,hamle_sayisi;
 	int yemek_sayisi,yemek_row,yemek_col;
@@ -36,6 +34,7 @@ int main(){
 			// içinde zaten 0 olan bir hücreye 0 tekrar 0 koyup daha az meyve yerleþtirebilir, diklkat et. if ile içini kontrol ettir.
 	// yemek pozisyonu
 	i= yemek_sayisi;
+	srand(time(NULL));
 	while( i>0 ){
 		yemek_row= rand() % M;
 		yemek_col= rand() % N;
@@ -52,7 +51,6 @@ int main(){
 	max_boyut=1;
 	
 	// yýlan baþlangýç pozisyonu
-	srand(time(NULL));
 	j=1;
 	while(j != 0){
 		yilan_row= rand() % M;
@@ -81,7 +79,7 @@ int main(){
 					printf("%d |",tablo[i][j]);
 				}
 				else if(tablo[i][j] >9 ){
-					printf("%d|",tablo[i][j]);	
+					printf("%d|",tablo[i][j]);
 				}
 			}
 			printf("\n");
