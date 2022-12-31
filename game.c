@@ -23,13 +23,28 @@ int main(){
 	}
 	
 	// oyun tahtasý oluþtur
-	int tablo[M][N];
+	int tablo[100][100];
 	
 	for(i=0;i<M;i++){
 		for(j=0;j<N;j++){
 			tablo[i][j]=-1;
 		}
 	}
+	// yýlan koordinatlarý
+	int yilan[200][3];
+	int max_boyut;
+	max_boyut=1;
+	
+	//yýlan baþlangýc pozisyonu
+	yilan_row= rand() % M;
+	yilan_col= rand() % N;
+	
+	tablo[yilan_row][yilan_col]=1;	
+	
+	yilan[max_boyut-1][0] = max_boyut;
+	yilan[max_boyut-1][1] = yilan_row;
+	yilan[max_boyut-1][2] = yilan_col;
+	
 	// olasý bir hata:
 			// içinde zaten 0 olan bir hücreye 0 tekrar 0 koyup daha az meyve yerleþtirebilir, diklkat et. if ile içini kontrol ettir.
 	// yemek pozisyonu
@@ -45,26 +60,6 @@ int main(){
 		}
 	}
 	
-	// yýlan koordinatlarý
-	int yilan[yemek_sayisi+1][3];
-	int max_boyut;
-	max_boyut=1;
-	
-	// yýlan baþlangýç pozisyonu
-	j=1;
-	while(j != 0){
-		yilan_row= rand() % M;
-		yilan_col= rand() % N;
-		
-		if(tablo[yilan_row][yilan_col] == -1 ){
-			tablo[yilan_row][yilan_col]=1;	
-			yilan[max_boyut-1][0] = max_boyut;
-			yilan[max_boyut-1][1] = yilan_row;
-			yilan[max_boyut-1][2] = yilan_col;
-			j -= 1;
-		}
-	}
-
 	game = 1;
 	hamle_sayisi=0;
 	while(game == 1 && yemek_sayisi>0){
@@ -109,6 +104,7 @@ int main(){
 				row_degis = 0;
 				col_degis = 1;
 			}
+	
 			hamle_sayisi +=1;
 			
 			// yýlanýn kafasýnýn yeni koordinatlarý
@@ -164,7 +160,7 @@ int main(){
 		//if bitiyor	
 		}
 		else{
-			printf("Hatali tus basimi,Yeni ");
+			printf("Hatali tus basimi,tekrar yon belirtin\n------------\n");
 		}
 	}
 	if(yemek_sayisi==0){
