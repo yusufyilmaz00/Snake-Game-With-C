@@ -118,12 +118,19 @@ int main(){
 				printf("Toplam Hamle:%d\nYilan Buyuklugu:%d\nKalan Yemek Sayisi:%d\n",hamle_sayisi,max_boyut,yemek_sayisi);
 			}
 			
-			is_eat=0;
+			// kuyruða çarptý mý ?
+			if(tablo[yilan_row][yilan_col]>0){
+				game = 0;
+				printf("Kendi kuyrugunu yedin ve kaybettin....\n\n");
+				printf("Toplam Hamle:%d\nYilan Buyuklugu:%d\nKalan Yemek Sayisi:%d\n",hamle_sayisi,max_boyut,yemek_sayisi);
+			}
+			
 			// Yýlanýn meyve yedi mi ?
+			is_eat=0;
 			if(tablo[yilan_row][yilan_col]== 0){
 				is_eat=1;
 			}
-			// yýlanýn son kuyruk izini silelim
+			// tablodan yýlanýn son kuyruk izini silelim
 			tablo[yilan[max_boyut-1][1]][yilan[max_boyut-1][2]]=-1;
 			
 			// yilan kuyruk koordinatlarý güncelle ( kaydýrarak)
