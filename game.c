@@ -83,7 +83,7 @@ int main(){
 		
 		//process	
 		printf("Hareket yonunu gir: ");
-		scanf(" %c",&hareket);    // ("%s",&hareket) ----->  (" %c",&hareket) yapýlarak bug çözüldü
+		scanf(" %c",&hareket); 
 		printf("------------\n");
 
 		// yönler U,D,L,R
@@ -123,6 +123,8 @@ int main(){
 			if(tablo[yilan_row][yilan_col]== 0){
 				is_eat=1;
 			}
+			// yýlanýn son kuyruk izini silelim
+			tablo[yilan[max_boyut-1][1]][yilan[max_boyut-1][2]]=-1;
 			
 			// yilan kuyruk koordinatlarý güncelle ( kaydýrarak)
 			for(i=max_boyut-1;i>0;i--){  // sondan baþa git, soldaki kordinatý saðdakine aktar
@@ -132,16 +134,7 @@ int main(){
 			// kafa koordinatlarý güncelle
 			yilan[0][1] += row_degis;
 			yilan[0][2] += col_degis;
-			
-			// haritayý sýfýrlar --meyveler hariç
-			for(i=0;i<M;i++){
-				for(j=0;j<N;j++){
-					if( tablo[i][j] != 0 ){
-						tablo[i][j] = -1;
-					}
- 				}
-			}
-
+		
 			// yeni koordinatlarý gir
 			for(i=0;i<max_boyut;i++){
 				yilan_row = yilan[i][1];
